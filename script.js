@@ -11,6 +11,7 @@ const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const shortBreakBtn = document.getElementById('shortBreakBtn');
 const longBreakBtn = document.getElementById('longBreakBtn');
+const stopBtn = document.getElementById('stopBtn'); // Select the new button
 
 // Formatar o tempo (adicionar zero à esquerda quando necessário)
 function formatTime(time) {
@@ -59,6 +60,14 @@ function pauseTimer() {
     pauseBtn.style.display = 'none';
 }
 
+// Parar o timer
+function stopTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    startBtn.style.display = 'inline-block';
+    pauseBtn.style.display = 'none';
+}
+
 // Reiniciar o timer
 function resetTimer() {
     clearInterval(timer);
@@ -70,26 +79,24 @@ function resetTimer() {
     pauseBtn.style.display = 'none';
 }
 
-// Configurar pausa curta
+// Configurar pausa curta e iniciar o timer
 function shortBreak() {
     clearInterval(timer);
     isRunning = false;
     minutes = 5; // 5 minutos para pausa curta
     seconds = 0;
     updateDisplay();
-    startBtn.style.display = 'inline-block';
-    pauseBtn.style.display = 'none';
+    startTimer(); // Inicia o timer automaticamente
 }
 
-// Configurar pausa longa
+// Configurar pausa longa e iniciar o timer
 function longBreak() {
     clearInterval(timer);
     isRunning = false;
     minutes = 15; // 15 minutos para pausa longa
     seconds = 0;
     updateDisplay();
-    startBtn.style.display = 'inline-block';
-    pauseBtn.style.display = 'none';
+    startTimer(); // Inicia o timer automaticamente
 }
 
 // Função para salvar a sessão (será implementada mais tarde)
@@ -100,8 +107,12 @@ function savePomodoroSession() {
 }
 
 // Event listeners
-startBtn.addEventListener('click', startTimer);
+startBtn.addEventListener('click', () => {
+    resetTimer(); // Reseta para 25 minutos
+    startTimer(); // Inicia o timer automaticamente
+});
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
 shortBreakBtn.addEventListener('click', shortBreak);
 longBreakBtn.addEventListener('click', longBreak);
+stopBtn.addEventListener('click', stopTimer);
