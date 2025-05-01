@@ -9,6 +9,8 @@ const timerDisplay = document.getElementById('timer');
 const startBtn = document.getElementById('startBtn');
 const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
+const shortBreakBtn = document.getElementById('shortBreakBtn');
+const longBreakBtn = document.getElementById('longBreakBtn');
 
 // Formatar o tempo (adicionar zero à esquerda quando necessário)
 function formatTime(time) {
@@ -68,6 +70,28 @@ function resetTimer() {
     pauseBtn.style.display = 'none';
 }
 
+// Configurar pausa curta
+function shortBreak() {
+    clearInterval(timer);
+    isRunning = false;
+    minutes = 5; // 5 minutos para pausa curta
+    seconds = 0;
+    updateDisplay();
+    startBtn.style.display = 'inline-block';
+    pauseBtn.style.display = 'none';
+}
+
+// Configurar pausa longa
+function longBreak() {
+    clearInterval(timer);
+    isRunning = false;
+    minutes = 15; // 15 minutos para pausa longa
+    seconds = 0;
+    updateDisplay();
+    startBtn.style.display = 'inline-block';
+    pauseBtn.style.display = 'none';
+}
+
 // Função para salvar a sessão (será implementada mais tarde)
 function savePomodoroSession() {
     // Esta função será usada para enviar dados ao servidor
@@ -79,3 +103,5 @@ function savePomodoroSession() {
 startBtn.addEventListener('click', startTimer);
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
+shortBreakBtn.addEventListener('click', shortBreak);
+longBreakBtn.addEventListener('click', longBreak);
