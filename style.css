@@ -41,36 +41,7 @@ h1 {
 
 .buttons.secondary {
     margin-top: 1rem;
-    justify-content: center; /* Center the buttons */
-}
-
-.buttons.secondary button {
-    background-color: #2ecc71; /* Light green background */
-    color: white;
-    padding: 0.5rem 1rem; /* Smaller padding */
-    font-size: 0.9rem; /* Smaller font size */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.buttons.secondary button:hover {
-    background-color: #27ae60; /* Darker green on hover */
-}
-
-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #c0392b;
+    justify-content: center;
 }
 
 #pauseBtn {
