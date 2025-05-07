@@ -23,7 +23,17 @@ function updateDisplay() {
     timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
 }
 
-// Iniciar o timer
+// Função para tocar o som do alarme
+function playAlarmSound() {
+    const alarmSound = new Audio('sounds/alarm_clock.wav');
+    alarmSound.play()
+    setTimeout(() => {
+        alarmSound.pause(); // Pausa o som após 5 segundos
+        alarmSound.currentTime = 0; // Reseta o tempo do som
+    }, 5000); // 5000 milissegundos = 5 segundos
+}
+
+// Atualizar o código do startTimer para esperar 10 segundos apenas quando o tempo acabar
 function startTimer() {
     if (!isRunning) {
         isRunning = true;
@@ -36,10 +46,10 @@ function startTimer() {
                     // Timer concluído
                     clearInterval(timer);
                     isRunning = false;
-                    alert('Tempo concluído!');
-                    resetTimer();
-                    // Aqui podemos adicionar código para salvar a sessão concluída
-                    savePomodoroSession();
+                    playAlarmSound(); // Toca o som do alarme
+                    setTimeout(() => {
+                        resetTimer(); // Reseta o timer após 10 segundos
+                    }, 5000);
                     return;
                 }
                 minutes--;
@@ -68,7 +78,7 @@ function stopTimer() {
     pauseBtn.style.display = 'none';
 }
 
-// Reiniciar o timer
+// Atualizar o código do resetTimer para reiniciar imediatamente
 function resetTimer() {
     clearInterval(timer);
     isRunning = false;
@@ -77,6 +87,7 @@ function resetTimer() {
     updateDisplay();
     startBtn.style.display = 'inline-block';
     pauseBtn.style.display = 'none';
+    console.log('Timer reset to 25:00');
 }
 
 // Configurar pausa curta e iniciar o timer
@@ -111,6 +122,7 @@ startBtn.addEventListener('click', () => {
     resetTimer(); // Reseta para 25 minutos
     startTimer(); // Inicia o timer automaticamente
 });
+
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
 shortBreakBtn.addEventListener('click', shortBreak);
