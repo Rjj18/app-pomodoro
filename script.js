@@ -11,7 +11,7 @@ const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const shortBreakBtn = document.getElementById('shortBreakBtn');
 const longBreakBtn = document.getElementById('longBreakBtn');
-const stopBtn = document.getElementById('stopBtn'); // Select the new button
+const stopBtn = document.getElementById('stopBtn');
 
 // Formatar o tempo (adicionar zero à esquerda quando necessário)
 function formatTime(time) {
@@ -28,9 +28,9 @@ function playAlarmSound() {
     const alarmSound = new Audio('./sounds/alarm_clock.mp3');
     alarmSound.play()
     setTimeout(() => {
-        alarmSound.pause(); // Pausa o som após 5 segundos
+        alarmSound.pause(); // Pausa o som após 10 segundos
         alarmSound.currentTime = 0; // Reseta o tempo do som
-    }, 5000); // 5000 milissegundos = 5 segundos
+    }, 10000); // 10000 milissegundos = 10 segundos
 }
 
 // Atualizar o código do startTimer para esperar 10 segundos apenas quando o tempo acabar
@@ -49,7 +49,7 @@ function startTimer() {
                     playAlarmSound(); // Toca o som do alarme
                     setTimeout(() => {
                         resetTimer(); // Reseta o timer após 10 segundos
-                    }, 5000);
+                    }, 10000);
                     return;
                 }
                 minutes--;
