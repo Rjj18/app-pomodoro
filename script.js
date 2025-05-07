@@ -25,7 +25,7 @@ function updateDisplay() {
 
 // Função para tocar o som do alarme
 function playAlarmSound() {
-    const alarmSound = new Audio('sounds/alarm_clock.mp3');
+    const alarmSound = new Audio('./sounds/alarm_clock.mp3');
     alarmSound.play()
     setTimeout(() => {
         alarmSound.pause(); // Pausa o som após 5 segundos
