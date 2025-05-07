@@ -28,7 +28,7 @@ app-pomodoro/
 ├── style.css        # Estilos personalizados
 ├── script.js        # Funcionalidade do timer
 ├── sounds/          # Diretório para arquivos de som
-│   └── alarm_clock.wav  # Som do alarme
+│   └── alarm_clock.mp3  # Som do alarme
 └── README.md        # Documentação do projeto
 ```
 
