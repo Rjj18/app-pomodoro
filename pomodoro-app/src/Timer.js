@@ -36,20 +36,28 @@ const Timer = () => {
 
   useEffect(() => {
     let timer;
+    let startTime;
+
     if (isRunning) {
+      startTime = Date.now();
       timer = setInterval(() => {
         setTimeLeft((prevTime) => {
-          if (prevTime <= 1) {
+          const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+          const newTimeLeft = Math.max(prevTime - elapsedTime, 0);
+
+          if (newTimeLeft === 0) {
             playAlarmSound();
             setIsRunning(false);
-            return 0;
+            clearInterval(timer);
           }
-          return prevTime - 1;
+
+          return newTimeLeft;
         });
       }, 1000);
     } else {
       clearInterval(timer);
     }
+
     return () => clearInterval(timer);
   }, [isRunning, playAlarmSound]);
 
