@@ -32,11 +32,15 @@ app-pomodoro/
 └── README.md        # Documentação do projeto
 ```
 
+
 ## Capturas de Tela
 ![Captura de Tela do Timer Pomodoro](screenshot.png)
 
+## Link para o Aplicativo
+[Aplicativo de Timer Pomodoro](https://Rjj18.github.io/app-pomodoro/)
+
 ## Melhorias Futuras
-- Adicionar durações de timer personalizáveis.
+- Criação de usuários para personalização.
 - Rastrear sessões Pomodoro concluídas.
 - Fornecer estatísticas detalhadas de produtividade.
 
