@@ -34,32 +34,35 @@ function playAlarmSound() {
 }
 
 // Atualizar o código do startTimer para esperar 10 segundos apenas quando o tempo acabar
+let startTime;
+let remainingTime = 25 * 60; // 25 minutes in seconds
+
 function startTimer() {
     if (!isRunning) {
         isRunning = true;
-        startBtn.style.display = 'none';
-        pauseBtn.style.display = 'inline-block';
-        
+        startTime = Date.now();
+
         timer = setInterval(() => {
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    // Timer concluído
-                    clearInterval(timer);
-                    isRunning = false;
-                    playAlarmSound(); // Toca o som do alarme
-                    setTimeout(() => {
-                        resetTimer(); // Reseta o timer após 10 segundos
-                    }, 10000);
-                    return;
-                }
-                minutes--;
-                seconds = 59;
-            } else {
-                seconds--;
+            const currentTime = Date.now();
+            const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+            const timeLeft = Math.max(0, remainingTime - elapsedTime);
+
+            updateDisplay(timeLeft);
+
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                isRunning = false;
+                playAlarmSound();
+                resetTimer();
             }
-            updateDisplay();
-        }, 1000);
+        }, 1000); // Update every second
     }
+}
+
+function updateDisplay(timeLeft) {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
 }
 
 // Pausar o timer
