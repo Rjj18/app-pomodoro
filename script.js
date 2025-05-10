@@ -40,22 +40,24 @@ let remainingTime = 25 * 60; // 25 minutes in seconds
 function startTimer() {
     if (!isRunning) {
         isRunning = true;
-        startTime = Date.now();
+        const endTime = Date.now() + remainingTime * 1000; // Calculate the end time
 
-        timer = setInterval(() => {
+        function tick() {
             const currentTime = Date.now();
-            const elapsedTime = Math.floor((currentTime - startTime) / 1000);
-            const timeLeft = Math.max(0, remainingTime - elapsedTime);
+            const timeLeft = Math.max(0, Math.floor((endTime - currentTime) / 1000));
 
             updateDisplay(timeLeft);
 
-            if (timeLeft === 0) {
-                clearInterval(timer);
+            if (timeLeft > 0 && isRunning) {
+                requestAnimationFrame(tick); // Continue updating
+            } else if (timeLeft === 0) {
                 isRunning = false;
                 playAlarmSound();
                 resetTimer();
             }
-        }, 1000); // Update every second
+        }
+
+        requestAnimationFrame(tick); // Start the timer loop
     }
 }
 
