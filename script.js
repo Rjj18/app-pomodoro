@@ -23,15 +23,40 @@ function updateDisplay() {
     timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
 }
 
-// Função para tocar o som do alarme
-function playAlarmSound() {
-    const alarmSound = new Audio('./sounds/alarm_clock.mp3');
-    alarmSound.play()
-    setTimeout(() => {
-        alarmSound.pause(); // Pausa o som após 10 segundos
-        alarmSound.currentTime = 0; // Reseta o tempo do som
-    }, 10000); // 10000 milissegundos = 10 segundos
+// Initialize AudioContext globally to reuse it
+let audioContext;
+let audioBuffer;
+
+// Load the alarm sound into the AudioContext
+async function initializeAudio() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const response = await fetch('./sounds/alarm_clock.mp3');
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    }
 }
+
+// Play the alarm sound using AudioContext
+function playAlarmSound() {
+    if (!audioContext) {
+        console.error('AudioContext is not initialized. Please interact with the page first.');
+        return;
+    }
+
+    const source = audioContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(audioContext.destination);
+    source.start();
+
+    // Stop the sound after 10 seconds
+    setTimeout(() => {
+        source.stop();
+    }, 10000);
+}
+
+// Ensure AudioContext is initialized after user interaction
+window.addEventListener('click', initializeAudio, { once: true });
 
 // Atualizar o código do startTimer para esperar 10 segundos apenas quando o tempo acabar
 let startTime;
@@ -69,27 +94,27 @@ function updateDisplay(timeLeft) {
 
 // Pausar o timer
 function pauseTimer() {
-    clearInterval(timer);
     isRunning = false;
+    const currentTime = Date.now();
+    remainingTime = Math.max(0, Math.floor((remainingTime * 1000 - (currentTime - startTime)) / 1000));
     startBtn.style.display = 'inline-block';
     pauseBtn.style.display = 'none';
 }
 
 // Parar o timer
 function stopTimer() {
-    clearInterval(timer);
     isRunning = false;
+    remainingTime = 25 * 60; // Reset to 25 minutes in seconds
+    updateDisplay(remainingTime);
     startBtn.style.display = 'inline-block';
     pauseBtn.style.display = 'none';
 }
 
 // Atualizar o código do resetTimer para reiniciar imediatamente
 function resetTimer() {
-    clearInterval(timer);
     isRunning = false;
-    minutes = 25;
-    seconds = 0;
-    updateDisplay();
+    remainingTime = 25 * 60; // Reset to 25 minutes in seconds
+    updateDisplay(remainingTime);
     startBtn.style.display = 'inline-block';
     pauseBtn.style.display = 'none';
     console.log('Timer reset to 25:00');
@@ -97,22 +122,18 @@ function resetTimer() {
 
 // Configurar pausa curta e iniciar o timer
 function shortBreak() {
-    clearInterval(timer);
     isRunning = false;
-    minutes = 5; // 5 minutos para pausa curta
-    seconds = 0;
-    updateDisplay();
-    startTimer(); // Inicia o timer automaticamente
+    remainingTime = 0.2 * 60; // 5 minutes in seconds for short break
+    updateDisplay(remainingTime);
+    startTimer(); // Automatically start the timer
 }
 
 // Configurar pausa longa e iniciar o timer
 function longBreak() {
-    clearInterval(timer);
     isRunning = false;
-    minutes = 15; // 15 minutos para pausa longa
-    seconds = 0;
-    updateDisplay();
-    startTimer(); // Inicia o timer automaticamente
+    remainingTime = 15 * 60; // 15 minutes in seconds for long break
+    updateDisplay(remainingTime);
+    startTimer(); // Automatically start the timer
 }
 
 // Função para salvar a sessão (será implementada mais tarde)
