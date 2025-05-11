@@ -87,9 +87,8 @@ function stopTimer() {
 function resetTimer() {
     clearInterval(timer);
     isRunning = false;
-    minutes = 25;
-    seconds = 0;
-    updateDisplay();
+    remainingTime = 25 * 60; // Reset remaining time to 25 minutes
+    updateDisplay(remainingTime); // Pass the correct timeLeft to updateDisplay
     startBtn.style.display = 'inline-block';
     pauseBtn.style.display = 'none';
     console.log('Timer reset to 25:00');
@@ -99,9 +98,8 @@ function resetTimer() {
 function shortBreak() {
     clearInterval(timer);
     isRunning = false;
-    minutes = 5; // 5 minutos para pausa curta
-    seconds = 0;
-    updateDisplay();
+    remainingTime = 5 * 60; // 5 minutos para pausa curta em segundos
+    updateDisplay(remainingTime); // Atualiza o display com o tempo correto
     startTimer(); // Inicia o timer automaticamente
 }
 
@@ -109,9 +107,8 @@ function shortBreak() {
 function longBreak() {
     clearInterval(timer);
     isRunning = false;
-    minutes = 15; // 15 minutos para pausa longa
-    seconds = 0;
-    updateDisplay();
+    remainingTime = 15 * 60; // 15 minutos para pausa longa em segundos
+    updateDisplay(remainingTime); // Atualiza o display com o tempo correto
     startTimer(); // Inicia o timer automaticamente
 }
 
