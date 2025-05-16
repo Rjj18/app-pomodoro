@@ -12,6 +12,8 @@ const shortBreakBtn = document.getElementById('shortBreakBtn');
 const longBreakBtn = document.getElementById('longBreakBtn');
 const stopBtn = document.getElementById('stopBtn');
 const continueBtn = document.getElementById('continueBtn'); // Adicionando funcionalidade para o botão continuar
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
 
 // Formatar o tempo (adicionar zero à esquerda quando necessário)
 function formatTime(time) {
@@ -183,6 +185,20 @@ function continueTimer() {
             }
         }, 500); // Atualiza a cada 500ms para maior precisão
     }
+}
+
+// Alternar entre tema padrão e tema hacker
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('hacker-theme');
+        if (document.body.classList.contains('hacker-theme')) {
+            // Ícone para tema claro (sol)
+            themeIcon.className = 'bi bi-sun-fill';
+        } else {
+            // Ícone para tema hacker (terminal)
+            themeIcon.className = 'bi bi-terminal-fill';
+        }
+    });
 }
 
 // Event listeners

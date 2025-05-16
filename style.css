@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css');
+
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
@@ -52,4 +54,36 @@ h1 {
 
 #continueBtn {
     display: none;
+}
+
+/* Tema Hacker */
+body.hacker-theme {
+    background-color: #111 !important;
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .container {
+    background-color: #222 !important;
+    color: #00ff00 !important;
+    box-shadow: 0 0 20px #00ff00a0;
+}
+
+body.hacker-theme .timer {
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .btn {
+    background-color: #111 !important;
+    color: #00ff00 !important;
+    border: 1px solid #00ff00 !important;
+}
+
+body.hacker-theme .btn:hover {
+    background-color: #00ff00 !important;
+    color: #111 !important;
+}
+
+body.hacker-theme .navbar, body.hacker-theme .navbar-brand, body.hacker-theme .nav-link {
+    background-color: #111 !important;
+    color: #00ff00 !important;
 }
