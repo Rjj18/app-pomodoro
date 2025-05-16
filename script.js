@@ -201,6 +201,15 @@ if (themeToggleBtn) {
     });
 }
 
+// Garante que o ícone inicial está correto ao abrir a página
+window.addEventListener('DOMContentLoaded', () => {
+    if (document.body.classList.contains('hacker-theme')) {
+        themeIcon.className = 'bi bi-sun-fill';
+    } else {
+        themeIcon.className = 'bi bi-terminal-fill';
+    }
+});
+
 // Event listeners
 startBtn.addEventListener('click', () => {
     resetTimer(); // Reseta para 25 minutos
