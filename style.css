@@ -87,3 +87,53 @@ body.hacker-theme .navbar, body.hacker-theme .navbar-brand, body.hacker-theme .n
     background-color: #111 !important;
     color: #00ff00 !important;
 }
+
+body.hacker-theme .btn-primary span.bi-play-fill {
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .btn-warning span.bi-pause-fill,
+body.hacker-theme .btn-warning span.bi-play-circle {
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .btn-secondary span.bi-arrow-counterclockwise {
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .btn-danger span.bi-stop-fill {
+    color: #ff0055 !important;
+}
+
+body.hacker-theme .btn-success span.bi-cup-hot {
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .btn-success span.bi-moon-stars {
+    color: #00bfff !important;
+}
+
+body:not(.hacker-theme) .btn-primary span.bi-play-fill {
+    color: #fff !important;
+}
+
+body:not(.hacker-theme) .btn-warning span.bi-pause-fill,
+body:not(.hacker-theme) .btn-warning span.bi-play-circle {
+    color: #fff !important;
+}
+
+body:not(.hacker-theme) .btn-secondary span.bi-arrow-counterclockwise {
+    color: #fff !important;
+}
+
+body:not(.hacker-theme) .btn-danger span.bi-stop-fill {
+    color: #fff !important;
+}
+
+body:not(.hacker-theme) .btn-success span.bi-cup-hot {
+    color: #fff !important;
+}
+
+body:not(.hacker-theme) .btn-success span.bi-moon-stars {
+    color: #fff !important;
+}
