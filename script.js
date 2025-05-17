@@ -28,47 +28,17 @@ function updateDisplay(timeLeft) {
 }
 
 // Ajustando a função playAlarmSound para garantir a reprodução em abas inativas
-let audioContext;
-
 function playAlarmSound() {
-    if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-
-    // Certifique-se de que o contexto de áudio esteja ativo
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
-    }
-
-    // Cria um oscilador para gerar o som
-    const oscillator = audioContext.createOscillator();
-    oscillator.type = 'square'; // Tipo de onda (quadrada para um som de "beep")
-    oscillator.frequency.setValueAtTime(880, audioContext.currentTime); // Frequência em Hz (A5)
-
-    // Cria um ganho para controlar o volume
-    const gainNode = audioContext.createGain();
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Volume inicial
-
-    // Conecta o oscilador ao ganho e o ganho à saída de áudio
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    // Inicia o som
-    oscillator.start();
-
-    // Alterna o som para criar o efeito "beep, beep, beep"
-    const interval = setInterval(() => {
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        setTimeout(() => {
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        }, 200); // Pausa breve entre os "beeps"
-    }, 500);
-
-    // Para o som após 5 segundos
-    setTimeout(() => {
-        clearInterval(interval);
-        oscillator.stop();
-    }, 10000);
+    // Usa um arquivo de áudio para garantir compatibilidade em abas inativas
+    const audio = new Audio('sounds/alarm_clock.mp3');
+    audio.currentTime = 0;
+    audio.volume = 0.5;
+    audio.play().catch((e) => {
+        // Caso o navegador bloqueie, tenta desbloquear após interação do usuário
+        document.body.addEventListener('click', () => {
+            audio.play();
+        }, { once: true });
+    });
 }
 
 // Certifique-se de que o contexto de áudio seja desbloqueado após a interação inicial do usuário
@@ -140,7 +110,7 @@ function resetTimer() {
 function shortBreak() {
     clearInterval(timer);
     isRunning = false;
-    remainingTime = 1 * 60; // 5 minutos para pausa curta em segundos
+    remainingTime = 5 * 60; // 5 minutos para pausa curta em segundos
     updateDisplay(remainingTime); // Atualiza o display com o tempo correto
     startTimer(); // Inicia o timer automaticamente
 }

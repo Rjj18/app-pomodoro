@@ -30,18 +30,32 @@
     <div class="container mt-5">
         <div class="row align-items-center">
             <div class="col-lg-8">
-                <h1 class="text-center text-danger">Relógio Pomodoro</h1>
+                <h1 class="text-center text-danger">Timer Pomodoro</h1>
                 <div class="timer display-1 text-center" id="timer">25:00</div>
                 <div class="d-flex justify-content-center gap-2 mt-4">
-                    <button id="startBtn" class="btn btn-primary">Iniciar Sessão</button>
-                    <button id="pauseBtn" class="btn btn-warning">Pausar</button>
-                    <button id="continueBtn" class="btn btn-warning">Continuar</button>
-                    <button id="resetBtn" class="btn btn-secondary">Resetar</button>
-                    <button id="stopBtn" class="btn btn-danger">Parar</button>
+                    <button id="startBtn" class="btn btn-primary" title="Iniciar Sessão">
+                        <span class="bi bi-play-fill"></span>
+                    </button>
+                    <button id="pauseBtn" class="btn btn-warning" title="Pausar">
+                        <span class="bi bi-pause-fill"></span>
+                    </button>
+                    <button id="continueBtn" class="btn btn-warning" title="Continuar">
+                        <span class="bi bi-play-circle"></span>
+                    </button>
+                    <button id="resetBtn" class="btn btn-secondary" title="Resetar">
+                        <span class="bi bi-arrow-counterclockwise"></span>
+                    </button>
+                    <button id="stopBtn" class="btn btn-danger" title="Parar">
+                        <span class="bi bi-stop-fill"></span>
+                    </button>
                 </div>
                 <div class="d-flex justify-content-center gap-2 mt-3">
-                    <button id="shortBreakBtn" class="btn btn-success">Pausa Curta</button>
-                    <button id="longBreakBtn" class="btn btn-success">Pausa Longa</button>
+                    <button id="shortBreakBtn" class="btn btn-success" title="Pausa Curta">
+                        <span class="bi bi-cup-hot"></span>
+                    </button>
+                    <button id="longBreakBtn" class="btn btn-success" title="Pausa Longa">
+                        <span class="bi bi-moon-stars"></span>
+                    </button>
                 </div>
             </div>
             <div class="col-lg-4">
