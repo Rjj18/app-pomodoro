@@ -157,28 +157,92 @@ function continueTimer() {
     }
 }
 
-// Alternar entre tema padrão e tema hacker
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('hacker-theme');
-        if (document.body.classList.contains('hacker-theme')) {
-            // Ícone para tema claro (sol)
-            themeIcon.className = 'bi bi-sun-fill';
-        } else {
-            // Ícone para tema hacker (terminal)
-            themeIcon.className = 'bi bi-terminal-fill';
+// Theme Management System
+class ThemeManager {
+    constructor() {
+        this.themeToggleBtn = document.getElementById('themeToggleBtn');
+        this.themeIcon = document.getElementById('themeIcon');
+        this.init();
+    }
+
+    init() {
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('pomodoro-theme') || 'light';
+        this.setTheme(savedTheme);
+        
+        // Add event listener for theme toggle
+        if (this.themeToggleBtn) {
+            this.themeToggleBtn.addEventListener('click', () => {
+                this.toggleTheme();
+            });
+            
+            // Add keyboard support
+            this.themeToggleBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleTheme();
+                }
+            });
         }
-    });
+
+        // Listen for system theme changes
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('pomodoro-theme')) {
+                this.setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
+    setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('pomodoro-theme', theme);
+        this.updateThemeIcon(theme);
+        
+        // Announce theme change for screen readers
+        this.announceThemeChange(theme);
+    }
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
+    }
+
+    updateThemeIcon(theme) {
+        if (this.themeIcon) {
+            if (theme === 'dark') {
+                this.themeIcon.className = 'bi bi-sun-fill';
+                this.themeToggleBtn.setAttribute('aria-label', 'Mudar para tema claro');
+                this.themeToggleBtn.setAttribute('title', 'Mudar para tema claro');
+            } else {
+                this.themeIcon.className = 'bi bi-moon-fill';
+                this.themeToggleBtn.setAttribute('aria-label', 'Mudar para tema escuro');
+                this.themeToggleBtn.setAttribute('title', 'Mudar para tema escuro');
+            }
+        }
+    }
+
+    announceThemeChange(theme) {
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.className = 'sr-only';
+        announcement.textContent = `Tema alterado para ${theme === 'dark' ? 'escuro' : 'claro'}`;
+        document.body.appendChild(announcement);
+        
+        setTimeout(() => {
+            document.body.removeChild(announcement);
+        }, 1000);
+    }
+
+    getCurrentTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+    }
 }
 
-// Garante que o ícone inicial está correto ao abrir a página
-window.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('hacker-theme')) {
-        themeIcon.className = 'bi bi-sun-fill';
-    } else {
-        themeIcon.className = 'bi bi-terminal-fill';
-    }
-});
+// Initialize theme manager
+const themeManager = new ThemeManager();
 
 // Event listeners
 startBtn.addEventListener('click', () => {
