@@ -137,3 +137,126 @@ body:not(.hacker-theme) .btn-success span.bi-cup-hot {
 body:not(.hacker-theme) .btn-success span.bi-moon-stars {
     color: #fff !important;
 }
+
+/* Task List Styles */
+.task-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.add-task-form .input-group {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.task-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.task-item.completed {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    opacity: 0.8;
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.task-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.task-text.completed {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.task-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.empty-state {
+    padding: 3rem 2rem;
+}
+
+/* Hacker Theme Task List Styles */
+body.hacker-theme .task-section {
+    background-color: #222 !important;
+    color: #00ff00 !important;
+    box-shadow: 0 0 20px #00ff00a0;
+}
+
+body.hacker-theme .task-item {
+    background-color: #111 !important;
+    border-color: #00ff00 !important;
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .task-item:hover {
+    background-color: #333 !important;
+}
+
+body.hacker-theme .task-item.completed {
+    background-color: #1a4d1a !important;
+    border-color: #00ff00 !important;
+}
+
+body.hacker-theme .task-text.completed {
+    color: #888 !important;
+}
+
+body.hacker-theme .form-control {
+    background-color: #111 !important;
+    border-color: #00ff00 !important;
+    color: #00ff00 !important;
+}
+
+body.hacker-theme .form-control:focus {
+    background-color: #111 !important;
+    border-color: #00ff00 !important;
+    color: #00ff00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 255, 0, 0.25) !important;
+}
+
+body.hacker-theme .form-control::placeholder {
+    color: #666 !important;
+}
+
+body.hacker-theme .empty-state {
+    color: #666 !important;
+}

@@ -171,13 +171,16 @@ if (themeToggleBtn) {
     });
 }
 
-// Garante que o ícone inicial está correto ao abrir a página
+// Garante que o ícone inicial está correto ao abrir a página e carrega as tarefas
 window.addEventListener('DOMContentLoaded', () => {
     if (document.body.classList.contains('hacker-theme')) {
         themeIcon.className = 'bi bi-sun-fill';
     } else {
         themeIcon.className = 'bi bi-terminal-fill';
     }
+    
+    // Load tasks after DOM is ready
+    loadTasks();
 });
 
 // Event listeners
@@ -191,3 +194,135 @@ shortBreakBtn.addEventListener('click', shortBreak);
 longBreakBtn.addEventListener('click', longBreak);
 stopBtn.addEventListener('click', stopTimer);
 continueBtn.addEventListener('click', continueTimer); // Adicionando event listener para o botão continuar
+
+// ========================================
+// TASK MANAGEMENT FUNCTIONALITY
+// ========================================
+
+// Task management variables
+let tasks = [];
+let taskIdCounter = 1;
+
+// Task management DOM elements
+const taskInput = document.getElementById('taskInput');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const taskList = document.getElementById('taskList');
+const emptyState = document.getElementById('emptyState');
+
+// Load tasks from localStorage when page loads
+function loadTasks() {
+    const savedTasks = localStorage.getItem('pomodoroTasks');
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+        // Update task counter to avoid ID conflicts
+        if (tasks.length > 0) {
+            taskIdCounter = Math.max(...tasks.map(task => task.id)) + 1;
+        }
+    }
+    renderTasks();
+}
+
+// Save tasks to localStorage
+function saveTasks() {
+    localStorage.setItem('pomodoroTasks', JSON.stringify(tasks));
+}
+
+// Add a new task
+function addTask() {
+    const taskText = taskInput.value.trim();
+    if (taskText === '') {
+        taskInput.focus();
+        return;
+    }
+
+    const newTask = {
+        id: taskIdCounter++,
+        text: taskText,
+        completed: false,
+        createdAt: new Date().toISOString()
+    };
+
+    tasks.unshift(newTask); // Add to beginning of array
+    taskInput.value = '';
+    saveTasks();
+    renderTasks();
+    taskInput.focus();
+}
+
+// Toggle task completion
+function toggleTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        task.completed = !task.completed;
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Delete a task
+function deleteTask(taskId) {
+    tasks = tasks.filter(t => t.id !== taskId);
+    saveTasks();
+    renderTasks();
+}
+
+// Edit a task
+function editTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    const newText = prompt('Editar tarefa:', task.text);
+    if (newText !== null && newText.trim() !== '') {
+        task.text = newText.trim();
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Render all tasks
+function renderTasks() {
+    if (tasks.length === 0) {
+        taskList.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+    }
+
+    taskList.style.display = 'block';
+    emptyState.style.display = 'none';
+
+    taskList.innerHTML = tasks.map(task => `
+        <div class="task-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
+            <div class="task-content">
+                <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
+                       onchange="toggleTask(${task.id})">
+                <span class="task-text ${task.completed ? 'completed' : ''}">${escapeHtml(task.text)}</span>
+            </div>
+            <div class="task-actions">
+                <button class="btn btn-sm btn-outline-primary" onclick="editTask(${task.id})" title="Editar">
+                    <span class="bi bi-pencil"></span>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${task.id})" title="Excluir">
+                    <span class="bi bi-trash"></span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Task management event listeners
+addTaskBtn.addEventListener('click', addTask);
+
+taskInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
+
+// Initialize tasks when DOM is loaded
