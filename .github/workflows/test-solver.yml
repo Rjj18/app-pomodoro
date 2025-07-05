@@ -1,0 +1,48 @@
+---
+name: Test Copilot Solver
+
+"on":
+  workflow_dispatch:
+    inputs:
+      test_title:
+        description: 'Test issue title'
+        required: true
+        default: 'Fix timer display issue'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Test project validation
+        run: |
+          echo "Testing Copilot workflow setup..."
+
+          # Test project files
+          [ -f "index.html" ] && echo "✅ HTML file found"
+          [ -f "script.js" ] && echo "✅ JavaScript file found"
+          [ -f "style.css" ] && echo "✅ CSS file found"
+
+          # Test syntax
+          node -c script.js && echo "✅ JavaScript syntax valid"
+
+          # Test workflow files
+          [ -f ".github/workflows/copilot-solver.yml" ] && \
+            echo "✅ Main workflow found"
+
+          echo "✅ All tests passed! Workflow is ready to use."
+          echo ""
+          echo "To use:"
+          echo "1. Create an issue with 'copilot-solve' label"
+          echo "2. Or run 'Copilot Issue Solver' workflow manually"

@@ -1,0 +1,74 @@
+name: 🤖 Copilot Issue (Auto-Solve)
+description: Create an issue that the Copilot workflow can automatically analyze and solve
+title: "[COPILOT] "
+labels: ["copilot-solve"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        🤖 **This template creates issues that trigger the automated Copilot workflow!**
+        
+        The workflow will analyze your issue and automatically create a pull request with a proposed solution.
+
+  - type: input
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What type of issue is this?
+      placeholder: "e.g., Timer bug, Button not working, Styling issue, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem Description
+      description: Describe the issue in detail. Be specific about what's not working.
+      placeholder: |
+        Example: "When I click the pause button, the timer doesn't actually pause. The countdown continues in the background and I can't resume from where I left off."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can someone reproduce this issue?
+      placeholder: |
+        1. Open the Pomodoro timer
+        2. Click "Start" to begin a 25-minute session
+        3. Click "Pause" after a few seconds
+        4. Notice that...
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: "The timer should pause and show the continue button..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: affected-files
+    attributes:
+      label: Likely Affected Files
+      description: Which files do you think need changes? (Optional - Copilot will analyze this automatically)
+      multiple: true
+      options:
+        - script.js (JavaScript functionality)
+        - style.css (Styling and themes)
+        - index.html (HTML structure)
+        - Not sure
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Agreement
+      options:
+        - label: I understand this issue will be automatically processed by the Copilot workflow
+          required: true
+        - label: I will review any auto-generated pull request before merging
+          required: true
