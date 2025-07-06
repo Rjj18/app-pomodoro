@@ -64,6 +64,36 @@
                 </p>
             </div>
         </div>
+        
+        <!-- Task List Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="task-section">
+                    <h2 class="text-center text-primary mb-4">Lista de Tarefas</h2>
+                    
+                    <!-- Add Task Form -->
+                    <div class="add-task-form mb-4">
+                        <div class="input-group">
+                            <input type="text" id="taskInput" class="form-control" placeholder="Digite uma nova tarefa..." maxlength="100">
+                            <button id="addTaskBtn" class="btn btn-primary">
+                                <span class="bi bi-plus-lg"></span> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Task List -->
+                    <div id="taskList" class="task-list">
+                        <!-- Tasks will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state text-center text-muted" style="display: none;">
+                        <span class="bi bi-list-check" style="font-size: 3rem;"></span>
+                        <p class="mt-2">Nenhuma tarefa adicionada ainda. Adicione sua primeira tarefa acima!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
